@@ -14,15 +14,15 @@ Window {
         anchors.right: parent.right
         anchors.left: parent.left
         anchors.top: parent.top
-        color: "#7D7D7D"
+        color: "#2c5a85"
 
         Text {
-            text: "SB Delphin - Ammerseeschwimmen"
+            text: "SB Delphin 03 - Ammerseeschwimmen"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             font.pixelSize: 32
             font.bold: true
-            color: "#DDDDDD"
+            color: "#ffffff"
         }
     }
 
@@ -32,7 +32,11 @@ Window {
         anchors.right: parent.right
         anchors.bottom: parent.bottom
         anchors.left: parent.left
-        color: "#4D4D4D"
+        color: "#2c5a85"
+        anchors.rightMargin: 0
+        anchors.bottomMargin: 0
+        anchors.leftMargin: 0
+        anchors.topMargin: 0
 
         ListView {
             id: eventlist
@@ -61,15 +65,24 @@ Window {
                 }
             }
             delegate: Rectangle {
-                color: index % 2 == 0 ? "#EEEEEE" : "#AAAAAA"
+                id: entry
+                //color: index % 2 == 0 ? "#7395b6" : "#AAAAAA"
                 anchors.left: parent.left
                 anchors.right: parent.right
                 height: 40
 
                 Text {
                     text: name
-                    anchors.verticalCenter: parent.verticalCenter
                     font.bold: true
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+                Rectangle {
+                    anchors.bottom: entry.bottom
+                    height: 1
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    width: parent.width / 2
+                    color: "#000"
                 }
             }
         }
@@ -81,7 +94,7 @@ Window {
             anchors.topMargin: 10
             anchors.bottom: parent.bottom
             anchors.left: eventlist.right
-            color: "#4D4D4D"
+            color: "#2c5a85"
 
             Button {
                 id: addEvent

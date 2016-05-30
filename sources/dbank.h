@@ -26,7 +26,7 @@
 #include <QString>
 #include <QtSql>
 #include <QFileInfo>
-#include <mainwindow.h>
+#include "sources/mainwindow.h"
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QDateTime>

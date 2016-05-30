@@ -20,8 +20,8 @@
 #define AUSWERTUNG_H
 
 #include <QDialog>
-#include <teilnehmer.h>
-#include <dbank.h>
+#include "sources/teilnehmer.h"
+#include "sources/dbank.h"
 
 
 namespace Ui {

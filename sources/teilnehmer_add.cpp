@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "teilnehmer_add.h"
+#include "sources/teilnehmer_add.h"
 #include "ui_teilnehmer_add.h"
 
 teilnehmer_add::teilnehmer_add(QWidget *parent,  QString Event_ID_) :

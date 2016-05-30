@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "duringevent.h"
+#include "sources/duringevent.h"
 #include "ui_duringevent.h"
 
 duringevent::duringevent(QWidget *parent, QString Event_ID_) :

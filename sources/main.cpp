@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "mainwindow.h"
+#include "sources/mainwindow.h"
 #include <QApplication>
-#include <dbank.h>
+#include "sources/dbank.h"
 #include <QMessageBox>
 #include <QString>
 #include <QLabel>

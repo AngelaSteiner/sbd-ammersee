@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "dbank.h"
+#include "sources/dbank.h"
 
 DBank::DBank()
 
@@ -223,7 +223,7 @@ void DBank::setEventDone(QString E_ID)
 //Rückgabe von Datum und Startzeit als int (Sekunden seit 01.01.1970)
 uint DBank::getDatumStartzeitfromEvent(QString E_ID)
 {
-    uint Datum;
+    uint Datum = 0;
 
     if(!E_ID.isEmpty())
     {

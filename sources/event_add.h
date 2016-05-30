@@ -20,9 +20,9 @@
 #define EVENT_ADD_H
 
 #include <QDialog>
-#include <mainwindow.h>
+#include "sources/mainwindow.h"
 #include <QString>
-#include <dbank.h>
+#include "sources/dbank.h"
 
 namespace Ui {
 class Event_add;

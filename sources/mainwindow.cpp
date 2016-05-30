@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "mainwindow.h"
+#include "sources/mainwindow.h"
 #include "ui_mainwindow.h"
 
 
@@ -86,6 +86,7 @@ void MainWindow::updateListView()
 //  -b) schon mit bereits eingetragenen Teilnehmern
 void MainWindow::on_listView_doubleClicked(const QModelIndex &index)
 {
+	Q_UNUSED(index);
     //Teilnehmer *Fenster = new Teilnehmer(0, meineId);
     QVariant row = ui->listView->currentIndex().data();
     QSqlQueryModel *model = (QSqlQueryModel*)ui->listView->model();
@@ -139,6 +140,7 @@ void MainWindow::on_pBtn_remove_Event_clicked()
 //wenn ein Eintrag ausgewählt wurde
 void MainWindow::on_listView_clicked(const QModelIndex &index)
 {
+	Q_UNUSED(index);
     ui->pBtn_remove_Event->setEnabled(true);
 }
 

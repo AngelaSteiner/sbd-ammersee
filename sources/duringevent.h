@@ -20,7 +20,7 @@
 #define DURINGEVENT_H
 
 #include <QDialog>
-#include <teilnehmer.h>
+#include "sources/teilnehmer.h"
 #include <QTime>
 #include <QTimer>
 #include <QString>

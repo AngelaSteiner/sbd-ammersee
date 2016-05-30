@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "teilnehmer.h"
+#include "sources/teilnehmer.h"
 #include "ui_teilnehmer.h"
 #include <QDate>
 
@@ -119,6 +119,7 @@ void Teilnehmer::updateTW()
 //nicht beendet wurde.
 void Teilnehmer::on_tableView_clicked(const QModelIndex &index)
 {
+	Q_UNUSED(index);
     DBank a;
     if(a.isEventDone(Event_ID)== 1)
     {
@@ -227,7 +228,7 @@ void Teilnehmer::update_TV_orderedByTime()
            NewRow.append(newColumn);
 
            Endzeit = qry.value("Endzeit").toInt();
-           if(Endzeit == NULL)
+           if(Endzeit == 0)
            {
                Endzeit = Startzeit;
            }

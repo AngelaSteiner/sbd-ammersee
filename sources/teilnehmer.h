@@ -20,13 +20,13 @@
 #define TEILNEHMER_H
 
 #include <QDialog>
-#include <teilnehmer_add.h>
+#include "sources/teilnehmer_add.h"
 #include <QMessageBox>
 #include <QString>
 #include <QDebug>
 #include <QDateTime>
-#include <duringevent.h>
-#include <dbank.h>
+#include "sources/duringevent.h"
+#include "sources/dbank.h"
 #include <QStandardItemModel>
 
 

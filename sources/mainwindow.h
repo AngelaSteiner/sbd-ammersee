@@ -20,8 +20,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <event_add.h>
-#include <teilnehmer.h>
+#include "sources/event_add.h"
+#include "sources/teilnehmer.h"
 #include <QMessageBox>
 #include <QString>
 #include <QDebug>

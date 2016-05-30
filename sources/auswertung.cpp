@@ -16,8 +16,8 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-#include "auswertung.h"
-#include "ui_auswertung.h"
+#include "sources/auswertung.h"
+#include "sources/ui_auswertung.h"
 
 auswertung::auswertung(QWidget *parent) :
     QDialog(parent),

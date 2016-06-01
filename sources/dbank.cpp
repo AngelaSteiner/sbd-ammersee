@@ -23,18 +23,26 @@ DBank::DBank()
 //DBank::DBank(QString path)
 {
     myDB = QSqlDatabase::addDatabase("QSQLITE");
-    //myDB.setDatabaseName(path);
-    //myDB.setDatabaseName("C:/Programmieren/Qt/Ammersee/Ammersee/Schwimm.db");
-    //myDB.setDatabaseName("C:/!Angela/Ammersee/Schwimm.db");
-    myDB.setDatabaseName("Schwimm.db");
-     qDebug() << "Aufruf Konstruktor";
+
+    //Pfad exe-Datei
+    QString db_path = QDir::currentPath();
+    qDebug() <<"exe"<<db_path;
+
+    //Pfad aktivieren, wenn release gemacht wird
+    db_path = QString("%1%2").arg(db_path).arg("/Schwimm.db");
+
+    //Pfad aktivieren, wenn aus Qt heraus gestartet wird
+    //db_path = QString("%1%2").arg(db_path).arg("/debug/Schwimm.db");
+    qDebug() <<"Pfad: "<<db_path;
+    myDB.setDatabaseName(db_path);
+    qDebug() << "Aufruf Konstruktor";
 }
 
  //Verbindung zur Datenbank herstellen
 bool DBank::con_open()
 {
     if(!(myDB.open()))
-       { 
+       {
         qDebug() << "Error: connection with database fail";
         return 0;
        }
@@ -113,7 +121,7 @@ void DBank::addTeilnehmer(QString E_ID, QString VN, QString NN, QString RFID)
     if(con_open())
     {
 
-    if (!NN.isEmpty())
+    if (!RFID.isEmpty())
         {
             //Objekt für DB-Abfrage erzeugen
             QSqlQuery qryaddTeilnehmer;
@@ -228,7 +236,7 @@ uint DBank::getDatumStartzeitfromEvent(QString E_ID)
     if(!E_ID.isEmpty())
     {
         if(con_open())
-        {                     
+        {
             QSqlQuery qry("select Startzeit from Event where ID = '"+E_ID+"' LIMIT 1");
 
             if(qry.exec() && qry.next())
@@ -292,4 +300,3 @@ void DBank::setEndzeit(QString RFID)
 
     }
 }
-

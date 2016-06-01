@@ -31,7 +31,15 @@ Teilnehmer::Teilnehmer(QWidget *parent, QString Event_ID_) :
     doneAbfrage();
 
     //bei FensterÖffnung wird das TableWidget aktualisiert
-    updateTW();
+    DBank a;
+    if(a.isEventDone(Event_ID)== 1)
+    {
+        update_TV_orderedByTime();
+    }
+    else
+    {
+        updateTW();
+    }
 
     //Überschrift einfügen
     setDatumUeberschrift();
@@ -46,7 +54,7 @@ Teilnehmer::~Teilnehmer()
 //Das Datum wird im oberen Teil des Fensters angezeigt
 void Teilnehmer::setDatumUeberschrift()
 {
-    DBank a;  
+    DBank a;
     QDateTime d = QDateTime::fromTime_t(a.getDatumStartzeitfromEvent(Event_ID));
     ui->lbl_Datum->setText(d.date().toString("dd.MM.yyyy"));
 
@@ -199,13 +207,13 @@ void Teilnehmer::update_TV_orderedByTime()
     a.con_open();
     uint Startzeit = a.getDatumStartzeitfromEvent(Event_ID);
 
-    QStandardItemModel *model = new QStandardItemModel(0,4,this);
-    model->setHeaderData(1,Qt::Horizontal,tr("Vorname"));
-    model->setHeaderData(2,Qt::Horizontal,tr("Nachname"));
-    model->setHeaderData(3,Qt::Horizontal,tr("benötigte Zeit"));
+    QStandardItemModel *model = new QStandardItemModel(0,3,this);
+    model->setHorizontalHeaderLabels(QStringList() << "Vorname" << "Nachname" << "benÃ¶tigte Zeit");
 
     QSqlQuery qry(a.myDB);
     qry.prepare("SELECT Vorname,Nachname,Endzeit from TEILNEHMER where Event_ID = '"+Event_ID+"' ORDER BY Endzeit ASC");
+    //SELECT t.Vorname as Vorname, t.Nachname as Nachname, time(t.Endzeit-e.Startzeit, "unixepoch") as "benÃ¶tigte Zeit" from TEILNEHMER as t JOIN EVENT as e ON e.ID == t.EVENT_ID where e.ID = '73' ORDER BY t.Endzeit ASC;
+    //qry.prepare("SELECT t.Vorname as Vorname, t.Nachname as Nachname, time(t.Endzeit-e.Startzeit, "unixepoch") as "benoetigte Zeit" from TEILNEHMER as t JOIN EVENT as e ON e.ID == t.EVENT_ID where e.ID = '"+Event_ID+"'' ORDER BY t.Endzeit ASC");
     if(qry.exec())
     {
 
@@ -215,9 +223,7 @@ void Teilnehmer::update_TV_orderedByTime()
 
            QList<QStandardItem*> NewRow;
             //Einfügen einer Leerspalte
-           QStandardItem *newColumn = new QStandardItem();
-           newColumn = new QStandardItem();
-           NewRow.append(newColumn);
+           QStandardItem *newColumn;
 
            QString Vorname = qry.value("Vorname").toString();
            newColumn = new QStandardItem(Vorname);
@@ -250,6 +256,3 @@ void Teilnehmer::update_TV_orderedByTime()
         ui->tableView->show();
     }
 }
-
-
-

@@ -87,7 +87,15 @@ void duringevent::on_lineEdit_RFID_returnPressed()
 //Auswertung angezeigt werden kann.
 void duringevent::on_pBtn_Event_beenden_clicked()
 {
-    DBank a;
+    //Fenster "duringevent" schließen
+    this->close();
+}
+
+//MessageBox in deutscher Sprache
+//Rückgabewert = 1, wenn ja betätigt wurde
+//Rückgabewert = 0, wenn nein betätigt wird
+bool duringevent::MyMessageboxReturn()
+{
     QMessageBox msg;
     msg.setText("Wollen Sie das Event wirklich beenden?");
     msg.setWindowTitle("Programm beenden");
@@ -97,37 +105,33 @@ void duringevent::on_pBtn_Event_beenden_clicked()
     msg.setButtonText(QMessageBox::No, "Nein");
     msg.setDefaultButton(QMessageBox::No);
 
-    int msg_return =  msg.exec();
-
-    switch (msg_return)
+    if (msg.exec() == QMessageBox::Yes)
     {
-        case QMessageBox::Yes:
-
-            //Das "Event" wird in der Datenbank
-            //gekennzeichnet, um alle Eingaben zu sperren.
-            a.setEventDone(Event_ID);
-
-            //Signal ausgelösen um das TableView
-            //im Teilnehmer.cpp upzudaten
-            emit(update_TW_Finish());
-
-            //Fenster "duringevent" schließen
-            this->close();
-        break;
-
-        case QMessageBox::No:
-      // nichts machen
-        break;
-
-        default:
-      // wenn garnichts geht ;-)
-        break;
+        return 1;
     }
-
+    else
+    {
+        return 0;
+    }
 }
 
-//Abfangen, wenn das Fenster über "X"-beendet wird
-void duringevent::on_duringevent_rejected()
+//Abfangen, wenn das Fenster Ã¼ber "X"-beendet wird
+void duringevent::closeEvent(QCloseEvent *ev)
 {
-    on_pBtn_Event_beenden_clicked();
+   if(MyMessageboxReturn())
+    {
+        DBank a;
+        //Das "Event" wird in der Datenbank
+        //gekennzeichnet, um alle Eingaben zu sperren.
+        a.setEventDone(Event_ID);
+
+        //Signal ausgelösen um das TableView
+        //im Teilnehmer.cpp upzudaten
+        emit(update_TW_Finish());
+        ev->accept();
+    }
+    else
+    {
+        ev->ignore();
+    }
 }

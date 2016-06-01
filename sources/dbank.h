@@ -30,6 +30,9 @@
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QDateTime>
+#include <QString>
+#include <QDir>
+#include <QFile>
 
 class DBank
 {
@@ -64,7 +67,7 @@ public:
 
     //Eintrag der Startzeit in Datenbank "Tabelle Event"
     //Übergabe-Parameter ist "ID des Events" in der Datenbank
-    void setStartzeit(QString);    
+    void setStartzeit(QString);
 
     //Rückgabe von Datum und Startzeit als int (Sekunden seit 01.01.1970)
     //Übergabe-Parameter ist "ID des Events" in der Datenbank

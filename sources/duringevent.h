@@ -26,7 +26,7 @@
 #include <QString>
 #include <QMessageBox>
 #include <QDebug>
-
+#include <QCloseEvent>
 
 
 namespace Ui {
@@ -42,6 +42,9 @@ public:
     explicit duringevent(QWidget *parent = 0, QString Event_ID = "");
     ~duringevent();
 
+protected:
+    //Abfangen, wenn das Fenster über "X"-beendet wird
+    void closeEvent(QCloseEvent *ev);
 
 signals:
     //void update_teilnehmer_TW();
@@ -60,6 +63,11 @@ public slots:
     //Das Ergebnis wird auf dem lbl_AnzeigeTeilnehmerimWasser angezeigt
     void AnzSchwimmerImWasser();
 
+    //MessageBox in deutscher Sprache
+    //Rückgabewert = 1, wenn ja betätigt wurde
+    //Rückgabewert = 0, wenn nein betätigt wird
+    bool MyMessageboxReturn();
+
 private slots:
     //RFID einlesen vom Teilnehmer und in Datenbank "Tabelle Teilnehmer"
     //die Endzeit des Teilnehmers eintrsgen
@@ -70,9 +78,6 @@ private slots:
     //mehr getätigt werden können und abschließend die
     //Auswertung angezeigt werden kann.
     void on_pBtn_Event_beenden_clicked();
-
-    //Abfangen, wenn das Fenster über "X"-beendet wird
-    void on_duringevent_rejected();
 
 private:
     Ui::duringevent *ui;

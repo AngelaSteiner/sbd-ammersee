@@ -107,13 +107,12 @@ void Teilnehmer::updateTW()
      QSqlQueryModel *oldModell = NULL;
 
      QSqlQuery qry = QSqlQuery(con.myDB);
-     qry.prepare("select ID, Vorname, Nachname, IDTAG from Teilnehmer where Event_ID = '"+Event_ID+"' ");//And Endzeit Is NULL ");
+     qry.prepare("select Vorname, Nachname, \"0\" as \"benötigte Zeit\" from Teilnehmer where Event_ID = '"+Event_ID+"' ");//And Endzeit Is NULL ");
      qry.exec();
      model->setQuery(qry);
 
      oldModell = (QSqlQueryModel*)ui->tableView->model();
      ui->tableView->setModel(model);
-     ui->tableView->setColumnHidden(0,true);
 
      if(oldModell)
          delete oldModell;
@@ -203,12 +202,34 @@ void Teilnehmer::update_TV_orderedByTime()
     ui->pBtn_Teilnehmer_remove->setEnabled(false);
     ui->pBn_Teilnehmer_add->setEnabled(false);
 
+    DBank con;
+    con.con_open();
+
+    QSqlQueryModel *model = new QSqlQueryModel();
+    QSqlQueryModel *oldModell = NULL;
+
+    QSqlQuery qry = QSqlQuery(con.myDB);
+    qry.prepare("SELECT t.Vorname as Vorname, t.Nachname as Nachname, time(t.Endzeit-e.Startzeit, \"unixepoch\") as \"benötigte Zeit\" from TEILNEHMER as t JOIN EVENT as e ON e.ID == t.EVENT_ID where e.ID = '"+Event_ID+"' ORDER BY t.Endzeit ASC");
+    qry.exec();
+    model->setQuery(qry);
+
+    oldModell = (QSqlQueryModel*)ui->tableView->model();
+    ui->tableView->setModel(model);
+
+    if(oldModell)
+        delete oldModell;
+
+    con.con_closed();
+
+
+/*
+
     DBank a;
     a.con_open();
     uint Startzeit = a.getDatumStartzeitfromEvent(Event_ID);
 
     QStandardItemModel *model = new QStandardItemModel(0,3,this);
-    model->setHorizontalHeaderLabels(QStringList() << "Vorname" << "Nachname" << "benÃ¶tigte Zeit");
+    model->setHorizontalHeaderLabels(QStringList() << "Vorname" << "Nachname" << "benötigte Zeit");
 
     QSqlQuery qry(a.myDB);
     qry.prepare("SELECT Vorname,Nachname,Endzeit from TEILNEHMER where Event_ID = '"+Event_ID+"' ORDER BY Endzeit ASC");
@@ -252,7 +273,11 @@ void Teilnehmer::update_TV_orderedByTime()
 
            model->appendRow(NewRow);
         }
+        QStandardItemModel *oldmodel = (QStandardItemModel*)ui->tableView->model();
         ui->tableView->setModel(model);
+        if(oldmodel)
+            delete oldmodel;
         ui->tableView->show();
     }
+    */
 }

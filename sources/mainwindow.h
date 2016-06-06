@@ -25,6 +25,8 @@
 #include <QMessageBox>
 #include <QString>
 #include <QDebug>
+#include <QFile>
+#include <QFileDialog>
 
 namespace Ui {
 class MainWindow;
@@ -57,6 +59,9 @@ private slots:
     //Der "-"-PBtn (remove_Event) wird erst aktiv,
     //wenn ein Eintrag ausgewählt wurde
     void on_listView_clicked(const QModelIndex &index);
+
+    //Ausleitung als csv-Datei
+    void on_pushButton_clicked();
 
 public slots:
     /*

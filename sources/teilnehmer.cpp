@@ -107,12 +107,13 @@ void Teilnehmer::updateTW()
      QSqlQueryModel *oldModell = NULL;
 
      QSqlQuery qry = QSqlQuery(con.myDB);
-     qry.prepare("select Vorname, Nachname, \"0\" as \"benötigte Zeit\" from Teilnehmer where Event_ID = '"+Event_ID+"' ");//And Endzeit Is NULL ");
+     qry.prepare("select ID, Vorname, Nachname, \"0\" as \"benötigte Zeit\" from Teilnehmer where Event_ID = '"+Event_ID+"' ");//And Endzeit Is NULL ");
      qry.exec();
      model->setQuery(qry);
 
      oldModell = (QSqlQueryModel*)ui->tableView->model();
      ui->tableView->setModel(model);
+     ui->tableView->setColumnHidden(0,true);
 
      if(oldModell)
          delete oldModell;
@@ -209,12 +210,13 @@ void Teilnehmer::update_TV_orderedByTime()
     QSqlQueryModel *oldModell = NULL;
 
     QSqlQuery qry = QSqlQuery(con.myDB);
-    qry.prepare("SELECT t.Vorname as Vorname, t.Nachname as Nachname, time(t.Endzeit-e.Startzeit, \"unixepoch\") as \"benötigte Zeit\" from TEILNEHMER as t JOIN EVENT as e ON e.ID == t.EVENT_ID where e.ID = '"+Event_ID+"' ORDER BY t.Endzeit ASC");
+    qry.prepare("SELECT t.ID as ID, t.Vorname as Vorname, t.Nachname as Nachname, time(t.Endzeit-e.Startzeit, \"unixepoch\") as \"benötigte Zeit\" from TEILNEHMER as t JOIN EVENT as e ON e.ID == t.EVENT_ID where e.ID = '"+Event_ID+"' ORDER BY t.Endzeit ASC");
     qry.exec();
     model->setQuery(qry);
 
     oldModell = (QSqlQueryModel*)ui->tableView->model();
     ui->tableView->setModel(model);
+    ui->tableView->setColumnHidden(0,true);
 
     if(oldModell)
         delete oldModell;

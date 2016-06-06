@@ -145,3 +145,46 @@ void MainWindow::on_listView_clicked(const QModelIndex &index)
 }
 
 
+  //Ausleitung als csv-Datei
+void MainWindow::on_pushButton_clicked()
+{
+    QSqlQueryModel *model = (QSqlQueryModel*)ui->listView->model();
+    QSqlRecord record = model->record(ui->listView->currentIndex().row());
+    QSqlField field_ID = record.field("ID");
+
+    DBank con;
+    con.con_open();
+
+    QSqlQuery query(con.myDB);
+    query.prepare("SELECT t.Vorname as Vorname, t.Nachname as Nachname, time(t.Endzeit-e.Startzeit, \"unixepoch\") from TEILNEHMER as t JOIN EVENT as e ON e.ID == t.EVENT_ID where e.ID = '"+field_ID.value().toString()+"' ORDER BY t.Endzeit ASC");
+
+    if(query.exec())
+    {
+       QSqlQueryModel *model=new QSqlQueryModel();
+        model->setQuery(query);
+
+        QString DB_Inhalt;
+        int rows=model->rowCount();
+        int columns=model->columnCount();
+
+        for (int i = 0; i < rows; i++)
+        {
+            for (int j = 0; j < columns; j++)
+            {
+                DB_Inhalt += model->data(model->index(i,j)).toString();
+                DB_Inhalt += "; ";
+            }
+            DB_Inhalt += "\n";
+        }
+
+        QString filename = QFileDialog::getSaveFileName(this,"Speichern unter","C://","All files (*.*);;ExcelFile(*.csv)");
+
+        QFile csvfile(filename);
+        if(csvfile.open(QIODevice::WriteOnly|QIODevice::Truncate))
+        {
+            QTextStream out(&csvfile);
+            out<<DB_Inhalt;
+        }
+        csvfile.close();
+    }
+}
